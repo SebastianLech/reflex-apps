@@ -1,5 +1,5 @@
 # A Workout App
 
 ## Things it Should do
-- [] allow for new users
-- [] display progress
+- [ ] allow for new users
+- [x] display progress
