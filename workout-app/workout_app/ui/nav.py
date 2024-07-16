@@ -25,7 +25,7 @@ def navbar() -> rx.Component:
                     align_items="center",
                 ),
                 rx.hstack(
-                    navbar_link("Home", "/#"),
+                    navbar_link("Home", navigation.routes.HOME_ROUTE),
                     navbar_link("Users", navigation.routes.USERS_ROUTE),
                     navbar_link("About", navigation.routes.ABOUT_ROUTE),
                     justify="end",
@@ -54,8 +54,12 @@ def navbar() -> rx.Component:
                         rx.icon("menu", size=30)
                     ),
                     rx.menu.content(
-                        rx.menu.item("Home"),
-                        rx.menu.item("Users"),
+                        rx.menu.item("Home", 
+                            on_click=navigation.NavState.to_home),
+                        rx.menu.item("Users",
+                            on_click=navigation.NavState.to_users),
+                        rx.menu.item("About",
+                            on_click=navigation.NavState.to_about),
                     ),
                     justify="end",
                 ),

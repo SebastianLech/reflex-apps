@@ -1,6 +1,11 @@
 # A Workout App
 
 ## Things it Should do
+- Layout
+    - [x] Navigation bar
+        - [ ] Home
+        - [ ] Users
+        - [ ] About
 - Functionality
     - [ ] allow for new users
         - button press to add new user

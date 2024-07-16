@@ -27,5 +27,16 @@ def index() -> rx.Component:
 
 
 app = rx.App()
-app.add_page(index)
-app.add_page(pages.users_page, route='/users')
+app.add_page(
+    index
+)
+
+app.add_page(
+    pages.users_page,
+    route=navigation.routes.USERS_ROUTE
+    )
+
+app.add_page(
+    pages.about_page,
+    route=navigation.routes.ABOUT_ROUTE
+    )
