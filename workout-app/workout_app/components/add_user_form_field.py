@@ -8,7 +8,6 @@ def form_field(
     name: str,
     icon: str,
     default_value: str = "",
-    **kwargs
 ) -> rx.Component:
     return rx.form.field(
         rx.flex(
@@ -18,18 +17,25 @@ def form_field(
                 align="center",
                 spacing="2",
             ),
-            rx.form.control(
-                rx.input(
-                    placeholder=placeholder, type=type, default_value=default_value
+            rx.hstack(
+                rx.form.control(
+                    rx.input(
+                        placeholder=placeholder, type=type, default_value=default_value
+                    ),
+                    as_child=True,
+                    width='40%',
                 ),
-                as_child=True,
-            ),
-            rx.form.message(
-                'please enter valid name',
-                match="patternMismatch"
+                rx.text(
+                    'some text',
+                    width='60%',
+                    align='right'
+                ),
+                align='center',
+                spacing='2',
             ),
             direction="column",
             spacing="1",
+            width='100%',
         ),
         name=name,
         width="100%",
