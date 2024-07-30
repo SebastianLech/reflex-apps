@@ -4,6 +4,7 @@ import reflex as rx
 
 from ..ui.base import base_page
 from .state import AddUserState
+from ..models import UserModel
 
 def add_user_button() -> rx.Component():
     return rx.dialog.root(
@@ -144,9 +145,35 @@ def add_user_button() -> rx.Component():
         on_open_change=AddUserState.clear_user_entered_data
     )
 
+def show_customer(user: UserModel):
+    """Show a customer in a table row."""
+    return rx.table.row(
+        rx.table.cell(user.username),
+        rx.table.cell(user.height),
+        rx.table.cell(user.created_at),
+    )
+
+def loading_data_table_example() -> rx.Component:
+    return rx.table.root(
+        rx.table.header(
+            rx.table.row(
+                rx.table.column_header_cell("Name"),
+                rx.table.column_header_cell("Height"),
+                rx.table.column_header_cell("Timestamp"),
+            ),
+        ),
+        rx.table.body(
+            rx.foreach(
+                AddUserState.users, show_customer
+            )
+        ),
+        on_mount=AddUserState.load_entries,
+        width="100%",
+    )
 
 # @rx.page(route='/about')
 def users_page() -> rx.Component:
     add_user = add_user_button()
+    user_table = loading_data_table_example()
 
-    return base_page(add_user)
+    return base_page(add_user, user_table)

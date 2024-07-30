@@ -1,6 +1,12 @@
 import json
 import re
+
 import reflex as rx 
+
+from typing import List
+from sqlmodel import select
+
+from ..models import UserModel
 
 def parse_username(username) -> str:
     return re.sub(r"[,.;@#?!&$%^*()_0-9+-=]+\ *", "", username).lower().replace(' ', '-')
@@ -26,6 +32,8 @@ class AddUserState(rx.State):
     username: str
     height: str
     weight: int
+
+    users: List['UserModel'] = []
 
     @rx.var
     def name_is_empty(self) -> bool:
@@ -63,17 +71,29 @@ class AddUserState(rx.State):
             if v == '' or v is None:
                 continue
             validated_data[k] = v
-        validated_data['username'] = parse_username(validated_data['username'])
-        validated_data['height'] = parse_height(validated_data['height'])
 
-        print(
+        validated_data['username'] = parse_username(
+            validated_data['username']
+        )
+        validated_data['height'] = parse_height(
+            validated_data['height']
+        )
+
+        with rx.session() as session:
+            db_entry = UserModel(
+                **validated_data
+            )
+            session.add(db_entry)
+            session.commit()
+
+        print('form data',
             json.dumps(
                 self.form_data,
                 indent=4
             )
         )
 
-        print(
+        print('validated data',
             json.dumps(
                 validated_data,
                 indent=4
@@ -84,3 +104,10 @@ class AddUserState(rx.State):
         self.height = ''
         self.user_entered_height = ''
         self.user_entered_username = ''
+
+
+    def load_entries(self) -> list[UserModel]:
+        with rx.session() as session:
+            self.users = session.exec(
+                select(UserModel)
+            ).all()
