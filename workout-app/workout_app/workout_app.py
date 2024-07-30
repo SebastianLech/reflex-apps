@@ -5,16 +5,7 @@ import reflex as rx
 from rxconfig import config
 from .ui.base import base_page
 
-from . import pages, navigation
-
-
-class State(rx.State):
-    """The app state."""
-
-    ...
-
-
-
+from . import pages, navigation, users
 
 
 
@@ -33,7 +24,7 @@ app.add_page(
 )
 
 app.add_page(
-    pages.users_page,
+    users.page.users_page,
     route=navigation.routes.USERS_ROUTE
     )
 
