@@ -158,7 +158,7 @@ def loading_data_table_example() -> rx.Component:
         rx.table.header(
             rx.table.row(
                 rx.table.column_header_cell("Name"),
-                rx.table.column_header_cell("Height"),
+                rx.table.column_header_cell("Height (in)"),
                 rx.table.column_header_cell("Timestamp"),
             ),
         ),
